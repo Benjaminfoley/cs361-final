@@ -35,8 +35,8 @@ class Track
         if tsj != ''
           tsj += ','
         end
-        tsj += '[#{c.lon},#{c.lat}'
-        # tsj += "#{c.lon},#{c.lat}"
+        tsj += '['
+        tsj += "#{c.lon},#{c.lat}"
         if c.ele != nil
           tsj += ",#{c.ele}"
         end
@@ -81,8 +81,8 @@ attr_reader :lat, :lon, :ele, :name, :type
   end
 
   def get_waypoint_json(indent=0)
-    j = '{"type": "Feature",'
-    j += '"geometry": {"type": "Point","coordinates": '
+    j = '{"type": "Feature","geometry": {"type": "Point","coordinates": '
+    # j += '"geometry": {"type": "Point","coordinates": '
     j += "[#{@lon},#{@lat}"
     if ele != nil
       j += ",#{@ele}"
