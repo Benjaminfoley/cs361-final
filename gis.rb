@@ -14,9 +14,9 @@ class Track
     j = '{"type": "Feature", '
     # j += ''
     if @name != nil
-      j+= '"properties": {'
-      j += '"title": "' + @name + '"'
-      j += '},'
+      j+= '"properties": {"title": "' + @name + '"},'
+      # j += '"title": "' + @name + '"'
+      # j += '},'
     end
     j += '"geometry": {'
     j += '"type": "MultiLineString",'
