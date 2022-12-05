@@ -17,10 +17,12 @@ class Track
       j+= '"properties": {"title": "' + @name + '"},'
       # j += '"title": "' + @name + '"'
       # j += '},'
+
     end
     j += '"geometry": {"type": "MultiLineString","coordinates": ['
     # j += '"type": "MultiLineString",'
     # j +='"coordinates": ['
+
     # Loop through all the segment objects
     @segments.each_with_index do |s, index|
       if index > 0
@@ -33,8 +35,8 @@ class Track
         if tsj != ''
           tsj += ','
         end
-        tsj += '['
-        tsj += "#{c.lon},#{c.lat}"
+        tsj += '[#{c.lon},#{c.lat}'
+        # tsj += "#{c.lon},#{c.lat}"
         if c.ele != nil
           tsj += ",#{c.ele}"
         end
