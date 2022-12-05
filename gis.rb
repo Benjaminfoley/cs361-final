@@ -18,9 +18,9 @@ class Track
       # j += '"title": "' + @name + '"'
       # j += '},'
     end
-    j += '"geometry": {'
-    j += '"type": "MultiLineString",'
-    j +='"coordinates": ['
+    j += '"geometry": {"type": "MultiLineString","coordinates": ['
+    # j += '"type": "MultiLineString",'
+    # j +='"coordinates": ['
     # Loop through all the segment objects
     @segments.each_with_index do |s, index|
       if index > 0
