@@ -11,24 +11,24 @@ class Track
   end
 
   def get_track_json()
-    j = '{"type": "Feature", '
+    json_output = '{"type": "Feature", '
     # j += ''
     if @name != nil
-      j+= '"properties": {"title": "' + @name + '"},'
+      json_output+= '"properties": {"title": "' + @name + '"},'
       # j += '"title": "' + @name + '"'
       # j += '},'
 
     end
-    j += '"geometry": {"type": "MultiLineString","coordinates": ['
+    json_output += '"geometry": {"type": "MultiLineString","coordinates": ['
     # j += '"type": "MultiLineString",'
     # j +='"coordinates": ['
 
     # Loop through all the segment objects
     @segments.each_with_index do |s, index|
       if index > 0
-        j += ","
+        json_output += ","
       end
-      j += '['
+      json_output += '['
       # Loop through all the coordinates in the segment
       tsj = ''
       s.coordinates.each do |c|
@@ -42,10 +42,10 @@ class Track
         end
         tsj += ']'
       end
-      j+=tsj
-      j+=']'
+      json_output+=tsj
+      json_output+=']'
     end
-    j + ']}}'
+    json_output + ']}}'
   end
 end
 class TrackSegment
@@ -81,28 +81,28 @@ attr_reader :lat, :lon, :ele, :name, :type
   end
 
   def get_waypoint_json(indent=0)
-    j = '{"type": "Feature","geometry": {"type": "Point","coordinates": '
+    json_output = '{"type": "Feature","geometry": {"type": "Point","coordinates": '
     # j += '"geometry": {"type": "Point","coordinates": '
-    j += "[#{@lon},#{@lat}"
+    json_output += "[#{@lon},#{@lat}"
     if ele != nil
-      j += ",#{@ele}"
+      json_output += ",#{@ele}"
     end
-    j += ']},'
+    json_output += ']},'
     if name != nil or type != nil
-      j += '"properties": {'
+      json_output += '"properties": {'
       if name != nil
-        j += '"title": "' + @name + '"'
+        json_output += '"title": "' + @name + '"'
       end
       if type != nil
         if name != nil
-          j += ','
+          json_output += ','
         end
-        j += '"icon": "' + @type + '"'
+        json_output += '"icon": "' + @type + '"'
       end
-      j += '}'
+      json_output += '}'
     end
-    j += "}"
-    return j
+    json_output += "}"
+    return json_output
   end
 end
 
