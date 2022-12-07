@@ -146,7 +146,7 @@ def main()
   track_1 = Track.new([ts1, ts2], "track 1")
   track_2 = Track.new([ts3], "track 2")
 
-  world = World.new("My Data", [w, w2, t, t2])
+  world = World.new("My Data", [waypoint_1, waypoint_2, track_1, track_2])
 
   puts world.to_geojson()
 end
