@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 class Track
+
   def initialize(segments, name=nil)
     @name = name
     segment_objects = []
@@ -30,19 +31,19 @@ class Track
       end
       json_output += '['
       # Loop through all the coordinates in the segment
-      tsj = ''
+      track_segment_json = ''
       s.coordinates.each do |c|
-        if tsj != ''
-          tsj += ','
+        if track_segment_json != ''
+          track_segment_json += ','
         end
-        tsj += '['
-        tsj += "#{c.lon},#{c.lat}"
+        track_segment_json += '['
+        track_segment_json += "#{c.lon},#{c.lat}"
         if c.ele != nil
-          tsj += ",#{c.ele}"
+          track_segment_json += ",#{c.ele}"
         end
-        tsj += ']'
+        track_segment_json += ']'
       end
-      json_output+=tsj
+      json_output+=track_segment_json
       json_output+=']'
     end
     json_output + ']}}'
@@ -67,8 +68,6 @@ class Point
 end
 
 class Waypoint
-
-
 
 attr_reader :lat, :lon, :ele, :name, :type
 
@@ -107,24 +106,25 @@ attr_reader :lat, :lon, :ele, :name, :type
 end
 
 class World
-def initialize(name, things)
+  
+def initialize(name, features)
   @name = name
-  @features = things
+  @features = features
 end
-  def add_feature(f)
+  def add_feature(features)
     @features.append(t)
   end
 
   def to_geojson(indent=0)
     s = '{"type": "FeatureCollection","features": ['
-    @features.each_with_index do |f,i|
+    @features.each_with_index do |feature,i|
       if i != 0
         s +=","
       end
-        if f.class == Track
-            s += f.get_track_json
-        elsif f.class == Waypoint
-            s += f.get_waypoint_json
+        if feature.class == Track
+            s += feature.get_track_json
+        elsif feature.class == Waypoint
+            s += feature.get_waypoint_json
       end
     end
     s + "]}"
@@ -132,23 +132,27 @@ end
 end
 
 def main()
-  w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
-  w2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
+  waypoint_1 = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
+  waypoint_2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
+
   ts1 = [
   Point.new(-122, 45),
   Point.new(-122, 46),
   Point.new(-121, 46),
   ]
 
-  ts2 = [ Point.new(-121, 45), Point.new(-121, 46), ]
+  ts2 = [ 
+    Point.new(-121, 45),
+    Point.new(-121, 46), 
+  ]
 
   ts3 = [
     Point.new(-121, 45.5),
     Point.new(-122, 45.5),
   ]
 
-  t = Track.new([ts1, ts2], "track 1")
-  t2 = Track.new([ts3], "track 2")
+  track_1 = Track.new([ts1, ts2], "track 1")
+  track_2 = Track.new([ts3], "track 2")
 
   world = World.new("My Data", [w, w2, t, t2])
 
