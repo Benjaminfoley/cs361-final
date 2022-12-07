@@ -13,17 +13,10 @@ class Track
 
   def get_track_json()
     json_output = '{"type": "Feature", '
-    # j += ''
     if @name != nil
       json_output+= '"properties": {"title": "' + @name + '"},'
-      # j += '"title": "' + @name + '"'
-      # j += '},'
-
     end
     json_output += '"geometry": {"type": "MultiLineString","coordinates": ['
-    # j += '"type": "MultiLineString",'
-    # j +='"coordinates": ['
-
     # Loop through all the segment objects
     @segments.each_with_index do |s, index|
       if index > 0
@@ -81,7 +74,6 @@ attr_reader :lat, :lon, :ele, :name, :type
 
   def get_waypoint_json(indent=0)
     json_output = '{"type": "Feature","geometry": {"type": "Point","coordinates": '
-    # j += '"geometry": {"type": "Point","coordinates": '
     json_output += "[#{@lon},#{@lat}"
     if ele != nil
       json_output += ",#{@ele}"
@@ -106,7 +98,7 @@ attr_reader :lat, :lon, :ele, :name, :type
 end
 
 class World
-  
+
 def initialize(name, features)
   @name = name
   @features = features
